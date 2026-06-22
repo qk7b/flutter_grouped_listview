@@ -19,15 +19,12 @@ class IndexedItem<T> {
 }
 
 /// The [HeaderBuilder] is a function that render a header of type [H] as a
-/// [Widget], it takes a [BuildContext], a [header] [H] as parameters and also the 
+/// [Widget], it takes a [BuildContext], a [header] [H] as parameters and also the
 /// number of items in the group, represented by [itemsCountInHeader]
-/// 
+///
 /// It is used by [GroupedListView<H, I>] to render the headers of type [H]
 typedef HeaderBuilder<H> = Widget Function(
-  BuildContext context,
-  H header,
-  int itemsCountInHeader
-);
+    BuildContext context, H header, int itemsCountInHeader);
 
 /// The [ItemsListBuilder] is a function that render a list of items of type [I]
 /// as a [Widget], it takes a [BuildContext] and a [List<IndexedItem<I>>]
