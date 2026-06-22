@@ -72,6 +72,9 @@ class GroupedListView<H, I> extends StatelessWidget {
   /// Optional [Function] that helps sort the groups by comparing the [H] headers.
   final Comparator<H>? headerSorter;
 
+  /// Optional [Function] that helps sort the items within a heading group by comparing them.
+  final Comparator<I>? itemSorter;
+
   /// Special [Widget] builder taking a [BuildContext], a [H] header and a [List] of [I] items.
   /// This *must* be null if you pass a [headerBuilder] and a [itemsBuilder] parameters.
   final ItemsWithHeaderBuilder<H, I>? customBuilder;
@@ -163,6 +166,7 @@ class GroupedListView<H, I> extends StatelessWidget {
       required this.itemGrouper,
       this.customBuilder,
       this.headerSorter,
+      this.itemSorter,
       // ListView Params
       this.scrollDirection = Axis.vertical,
       this.reverse = false,
@@ -221,6 +225,7 @@ class GroupedListView<H, I> extends StatelessWidget {
         listItemBuilder,
     required H Function(I item) itemGrouper,
     Comparator<H>? headerSorter,
+    Comparator<I>? itemSorter,
     // Optional items for macro ListView
     Axis scrollDirection = Axis.vertical,
     bool reverse = false,
@@ -261,6 +266,7 @@ class GroupedListView<H, I> extends StatelessWidget {
           },
           itemGrouper: itemGrouper,
           headerSorter: headerSorter,
+          itemSorter: itemSorter,
           // Optional items for macro ListView
           scrollDirection: scrollDirection,
           reverse: reverse,
@@ -305,6 +311,7 @@ class GroupedListView<H, I> extends StatelessWidget {
         gridItemBuilder,
     required H Function(I item) itemGrouper,
     Comparator<H>? headerSorter,
+    Comparator<I>? itemSorter,
     // Gridview params
     required int crossAxisCount,
     double crossAxisSpacing = 0,
@@ -356,6 +363,7 @@ class GroupedListView<H, I> extends StatelessWidget {
           },
           itemGrouper: itemGrouper,
           headerSorter: headerSorter,
+          itemSorter: itemSorter,
           // Optional items for macro ListView
           scrollDirection: scrollDirection,
           reverse: reverse,
@@ -403,6 +411,9 @@ class GroupedListView<H, I> extends StatelessWidget {
       itemBuilder: (context, index) {
         H header = keys[index];
         List<IndexedItem<I>> items = groupedItems[header]!;
+        if (itemSorter != null) {
+          items.sortByCompare((i) => i.item, (a, b) => itemSorter!(a, b));
+        }
         final nonIndexedItems = items.map((i) => i.item).toList();
         if (customBuilder != null) {
           return customBuilder!(context, header, items);
