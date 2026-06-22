@@ -1,5 +1,5 @@
 name: simple_grouped_listview
-version: 3.0.0
+version: 4.0.0
 description: |
   A package to display a grouped list of items. Provide a List, a grouper, and let it display it as a ListView, a GridView or anything else. Grouped by headers.
 

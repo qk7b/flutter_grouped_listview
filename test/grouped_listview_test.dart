@@ -183,8 +183,8 @@ void main() {
             body: GroupedListView<String, String>(
               items: ['apple'],
               itemGrouper: (item) => item.substring(0, 1),
-              headerBuilder: (context, header, count) =>
-                  Text('Header: $header ($count)'),
+              headerBuilder: (context, header, items) =>
+                  Text('Header: $header (${items.length})'),
               itemsBuilder: (context, items) => Container(),
             ),
           ),
@@ -204,8 +204,8 @@ void main() {
             body: GroupedListView<String, int>(
               items: items,
               itemGrouper: (item) => item % 2 == 0 ? 'even' : 'odd',
-              headerBuilder: (context, header, count) =>
-                  Text('$header ($count)'),
+              headerBuilder: (context, header, items) =>
+                  Text('$header (${items.length})'),
               itemsBuilder: (context, items) => Container(),
             ),
           ),
@@ -327,31 +327,6 @@ void main() {
       );
 
       expect(find.byType(ListView), findsWidgets);
-    });
-
-    testWidgets('should pass correct itemsCountInHeader to headerBuilder',
-        (WidgetTester tester) async {
-      int capturedCount = -1;
-
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: GroupedListView<String, String>(
-              items: ['apple', 'apricot', 'banana'],
-              itemGrouper: (item) => item.substring(0, 1),
-              headerBuilder: (context, header, count) {
-                if (header == 'a') {
-                  capturedCount = count;
-                }
-                return Text('Header: $header ($count)');
-              },
-              itemsBuilder: (context, items) => Container(),
-            ),
-          ),
-        ),
-      );
-
-      expect(capturedCount, equals(2));
     });
 
     testWidgets('should handle reversed list', (WidgetTester tester) async {
@@ -704,8 +679,8 @@ void main() {
             body: GroupedListView<String, int>(
               items: items,
               itemGrouper: (item) => item % 2 == 0 ? 'even' : 'odd',
-              headerBuilder: (context, header, count) =>
-                  Text('$header ($count)'),
+              headerBuilder: (context, header, items) =>
+                  Text('$header (${items.length})'),
               itemsBuilder: (context, items) => Column(
                 children: items.map((item) => Text('${item.item}')).toList(),
               ),

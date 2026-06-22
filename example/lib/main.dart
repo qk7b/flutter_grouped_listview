@@ -69,12 +69,12 @@ class CustomPage extends StatelessWidget {
       appBar: AppBar(title: const Text('Custom GroupedListView')),
       body: GroupedListView(
         items: List<int>.generate(100, (index) => index + 1),
-        headerBuilder: (context, bool isEven, int evenItemsCount) {
+        headerBuilder: (context, isEven, itemsForHeader) {
           return Container(
             color: Colors.amber,
             padding: const EdgeInsets.all(16),
             child: Text(
-              '${(isEven ? 'Even' : 'Odd')} ($evenItemsCount)',
+              '${(isEven ? 'Even' : 'Odd')} (${itemsForHeader.length})',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           );
@@ -114,12 +114,12 @@ class ListPage extends StatelessWidget {
       appBar: AppBar(title: const Text('GroupedListView.list()')),
       body: GroupedListView.list(
         items: List<int>.generate(100, (index) => index + 1),
-        headerBuilder: (context, bool isEven, int evenItemsCount) {
+        headerBuilder: (context, isEven, itemsForHeader) {
           return Container(
             color: Colors.amber,
             padding: const EdgeInsets.all(16),
             child: Text(
-              '${(isEven ? 'Even' : 'Odd')} ($evenItemsCount)',
+              '${(isEven ? 'Even' : 'Odd')} (${itemsForHeader.length})',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           );
@@ -151,12 +151,12 @@ class GridPage extends StatelessWidget {
       appBar: AppBar(title: const Text('GroupedListView.grid()')),
       body: GroupedListView.grid(
         items: List<int>.generate(100, (index) => index + 1),
-        headerBuilder: (context, bool isEven, int evenItemsCount) {
+        headerBuilder: (context, isEven, itemsForHeader) {
           return Container(
             color: Colors.amber,
             padding: const EdgeInsets.all(16),
             child: Text(
-              '${(isEven ? 'Even' : 'Odd')} ($evenItemsCount)',
+              '${(isEven ? 'Even' : 'Odd')} (${itemsForHeader.length})',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           );
@@ -240,8 +240,8 @@ class HorizontalPage extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         items: List<int>.generate(100, (index) => index + 1),
         itemGrouper: (int i) => i.isEven,
-        headerBuilder: (context, bool isEven, int evenItemsCount) =>
-            Text('${(isEven ? 'Even' : 'Odd')} ($evenItemsCount)'),
+        headerBuilder: (context, isEven, itemsForHeader) =>
+            Text('${(isEven ? 'Even' : 'Odd')} (${itemsForHeader.length})'),
         listItemBuilder:
             (context, int countInGroup, int itemIndexInGroup, int item, _) =>
                 Container(
