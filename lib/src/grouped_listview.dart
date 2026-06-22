@@ -24,7 +24,7 @@ class IndexedItem<T> {
 ///
 /// It is used by [GroupedListView<H, I>] to render the headers of type [H]
 typedef HeaderBuilder<H, I> = Widget Function(
-    BuildContext context, H header, int itemsForHeaderCount);
+    BuildContext context, H header, List<I> itemsForHeader);
 
 /// The [ItemsListBuilder] is a function that render a list of items of type [I]
 /// as a [Widget], it takes a [BuildContext] and a [List<IndexedItem<I>>]
@@ -416,7 +416,7 @@ class GroupedListView<H, I> extends StatelessWidget {
                   verticalDirection: itemsVerticalDirection,
                   textBaseline: itemsTextBaseline,
                   children: [
-                    headerBuilder!(context, header, nonIndexedItems.length),
+                    headerBuilder!(context, header, nonIndexedItems),
                     itemsBuilder!(context, items)
                   ],
                 )
@@ -428,7 +428,7 @@ class GroupedListView<H, I> extends StatelessWidget {
                   verticalDirection: itemsVerticalDirection,
                   textBaseline: itemsTextBaseline,
                   children: [
-                      headerBuilder!(context, header, nonIndexedItems.length),
+                      headerBuilder!(context, header, nonIndexedItems),
                       itemsBuilder!(context, items)
                     ]);
         }
