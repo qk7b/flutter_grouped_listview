@@ -20,11 +20,11 @@ class IndexedItem<T> {
 
 /// The [HeaderBuilder] is a function that render a header of type [H] as a
 /// [Widget], it takes a [BuildContext], a [header] [H] as parameters and also the
-/// number of items in the group, represented by [itemsCountInHeader]
+/// items in the group, represented by [itemsForHeader]
 ///
 /// It is used by [GroupedListView<H, I>] to render the headers of type [H]
-typedef HeaderBuilder<H> = Widget Function(
-    BuildContext context, H header, int itemsCountInHeader);
+typedef HeaderBuilder<H, I> = Widget Function(
+    BuildContext context, H header, int itemsForHeaderCount);
 
 /// The [ItemsListBuilder] is a function that render a list of items of type [I]
 /// as a [Widget], it takes a [BuildContext] and a [List<IndexedItem<I>>]
@@ -59,7 +59,7 @@ class GroupedListView<H, I> extends StatelessWidget {
   /// Special [Widget] builder taking a [BuildContext] and a [H] header
   /// ([H] is defined by you in the [itemGrouper] parameter)
   /// This *must* be null if you pass a [customBuilder] parameter.
-  final HeaderBuilder<H>? headerBuilder;
+  final HeaderBuilder<H, I>? headerBuilder;
 
   /// Special [Widget] builder taking a [BuildContext] and a [List] of [I] items
   /// This *must* be null if you pass a [customBuilder] parameter.
@@ -215,7 +215,7 @@ class GroupedListView<H, I> extends StatelessWidget {
     Key? key,
     // GroupedListView params
     required List<I> items,
-    required HeaderBuilder<H> headerBuilder,
+    required HeaderBuilder<H, I> headerBuilder,
     required Widget Function(BuildContext context, int itemCountInGroup,
             int itemIndexInGroup, I item, int itemIndexInOriginalList)
         listItemBuilder,
@@ -299,7 +299,7 @@ class GroupedListView<H, I> extends StatelessWidget {
     Key? key,
     // GroupedListView params
     required List<I> items,
-    required HeaderBuilder<H> headerBuilder,
+    required HeaderBuilder<H, I> headerBuilder,
     required Widget Function(BuildContext context, int itemCountInGroup,
             int itemIndexInGroup, I item, int itemIndexInOriginalList)
         gridItemBuilder,
@@ -403,6 +403,7 @@ class GroupedListView<H, I> extends StatelessWidget {
       itemBuilder: (context, index) {
         H header = keys[index];
         List<IndexedItem<I>> items = groupedItems[header]!;
+        final nonIndexedItems = items.map((i) => i.item).toList();
         if (customBuilder != null) {
           return customBuilder!(context, header, items);
         } else {
@@ -415,7 +416,7 @@ class GroupedListView<H, I> extends StatelessWidget {
                   verticalDirection: itemsVerticalDirection,
                   textBaseline: itemsTextBaseline,
                   children: [
-                    headerBuilder!(context, header, items.length),
+                    headerBuilder!(context, header, nonIndexedItems.length),
                     itemsBuilder!(context, items)
                   ],
                 )
@@ -427,7 +428,7 @@ class GroupedListView<H, I> extends StatelessWidget {
                   verticalDirection: itemsVerticalDirection,
                   textBaseline: itemsTextBaseline,
                   children: [
-                      headerBuilder!(context, header, items.length),
+                      headerBuilder!(context, header, nonIndexedItems.length),
                       itemsBuilder!(context, items)
                     ]);
         }

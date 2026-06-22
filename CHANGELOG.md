@@ -1,3 +1,7 @@
+## 4.0.0
+
+- Removed `evenItemsCount` in favor of `itemsForHeader` in header builder
+
 ## 3.0.0
 
 - Update dependencies

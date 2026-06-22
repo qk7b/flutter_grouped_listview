@@ -80,7 +80,7 @@ Here are examples of each usage
 GroupedListView.list(
     items: List<int>.generate(100, (index) => index + 1),
     itemGrouper: (int i) => i.isEven,
-    headerBuilder: (context, bool isEven, int evenItemsCount) => Container(
+    headerBuilder: (context, isEven, itemsForHeaderCount) => Container(
         color: Colors.amber,
         child: Text(
             isEven ? 'Even' : 'Odd',
@@ -105,7 +105,7 @@ GroupedListView.list(
 GroupedListView.grid(
     items: List<int>.generate(100, (index) => index + 1),
     itemGrouper: (int i) => i.isEven,
-    headerBuilder: (context, bool isEven, int evenItemsCount) => Container(
+    headerBuilder: (context, isEven, itemsForHeaderCount) => Container(
         color: Colors.amber,
         child: Text(
             isEven ? 'Even' : 'Odd',
@@ -131,7 +131,7 @@ GroupedListView.grid(
 ```dart
 GroupedListView(
     items: List<int>.generate(100, (index) => index + 1),
-    headerBuilder: (context, bool isEven, int evenItemsCount) => Container(
+    headerBuilder: (context, isEven, itemsForHeader) => Container(
         child: Text(
             isEven ? 'Even' : 'Odd',
             style: const TextStyle(fontWeight: FontWeight.bold),
