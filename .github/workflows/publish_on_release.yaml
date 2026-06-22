@@ -14,10 +14,13 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v4
-      - uses: dart-lang/setup-dart@v1
+      - name: Setup Flutter SDK
+        uses: flutter-actions/setup-flutter@v4
+        with:
+          channel: stable
       - name: Install dependencies
-        run: dart pub get
+        run: flutter pub get
       - name: Publish - dry run
-        run: dart pub publish --dry-run
+        run: flutter pub publish --dry-run
       - name: Publish to pub.dev
-        run: dart pub publish -f
+        run: flutter pub publish -f
