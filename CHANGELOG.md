@@ -1,28 +1,13 @@
 ## 4.0.0
 
-- Removed `evenItemsCount` in favor of `itemsForHeader` in header builder
+- Removed `evenItemsCount` in favor of `itemsForHeader` in header builder (**breaking change**)
+- Add optional `itemSorter` to help sort items within a group itself
 
 ## 3.0.0
 
 - Update dependencies
 - Add number of elements in section to the header builder (**breaking change**)
 - Add unit tests
-
-## 2.0.0
-
-- Add a the original index of the item in the parameters
-
-## 1.0.0
-
-* `GroupedListView`
-* `GroupedListView.list()`
-* `GroupedListView.grid()`
-
-See [documentation](https://github.com/quentin7b/flutter_grouped_listview)
-
-## 1.0.1
-
-* Fixes an issue that makes horizontal lists and scroll lead to Unbounded height
 
 ## 2.0.0
 
@@ -34,3 +19,15 @@ This is a breaking change, as your code needs to be updated to takes this new pa
 This fills a [requirement asked in the project](https://github.com/quentin7b/flutter_grouped_listview/issues/5) 
 
 > This would be necessary to create a "scroll to header" function and is available in most List/GridView objects and other grouped list packages.
+
+## 1.0.1
+
+* Fixes an issue that makes horizontal lists and scroll lead to Unbounded height
+
+## 1.0.0
+
+* `GroupedListView`
+* `GroupedListView.list()`
+* `GroupedListView.grid()`
+
+See [documentation](https://github.com/quentin7b/flutter_grouped_listview)

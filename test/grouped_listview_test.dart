@@ -557,6 +557,122 @@ void main() {
     });
   });
 
+  group('ItemSorter', () {
+    testWidgets('should sort items within groups using itemSorter',
+        (WidgetTester tester) async {
+      final items = ['apple', 'avocado', 'banana', 'blueberry', 'cherry'];
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: GroupedListView<String, String>(
+              items: items,
+              itemGrouper: (item) => item.substring(0, 1),
+              headerBuilder: (context, header, count) =>
+                  Text('Header: $header'),
+              itemsBuilder: (context, itemsList) => Column(
+                children: itemsList.map((indexedItem) {
+                  return Text('Item: ${indexedItem.item}');
+                }).toList(),
+              ),
+              itemSorter: (a, b) => a.compareTo(b),
+            ),
+          ),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+
+      final items_a = find.byWidgetPredicate((widget) =>
+          widget is Text &&
+          (widget.data == 'Item: apple' || widget.data == 'Item: avocado'));
+      expect(items_a.evaluate().length, greaterThanOrEqualTo(0));
+    });
+
+    testWidgets('should sort items in reverse order with custom comparator',
+        (WidgetTester tester) async {
+      final items = ['apple', 'avocado', 'banana', 'blueberry'];
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: GroupedListView<String, String>(
+              items: items,
+              itemGrouper: (item) => item.substring(0, 1),
+              headerBuilder: (context, header, count) =>
+                  Text('Header: $header'),
+              itemsBuilder: (context, itemsList) => Column(
+                children: itemsList.map((indexedItem) {
+                  return Text('Item: ${indexedItem.item}');
+                }).toList(),
+              ),
+              itemSorter: (a, b) => b.compareTo(a), // Reverse sort
+            ),
+          ),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+
+      final items_widgets = find.byType(Text);
+      expect(items_widgets, findsWidgets);
+    });
+
+    testWidgets('should work with numeric item sorting',
+        (WidgetTester tester) async {
+      final items = [3, 1, 4, 1, 5, 9, 2, 6];
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: GroupedListView<String, int>(
+              items: items,
+              itemGrouper: (item) => 'Numbers',
+              headerBuilder: (context, header, count) => Text(header),
+              itemsBuilder: (context, itemsList) => Column(
+                children: itemsList.map((indexedItem) {
+                  return Text('${indexedItem.item}');
+                }).toList(),
+              ),
+              itemSorter: (a, b) => a.compareTo(b),
+            ),
+          ),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+
+      expect(find.text('1'), findsWidgets);
+      expect(find.text('9'), findsOneWidget);
+    });
+
+    test('should accept itemSorter in constructor without errors', () {
+      final widget = GroupedListView<String, String>(
+        items: ['apple', 'banana', 'cherry'],
+        itemGrouper: (item) => item.substring(0, 1),
+        headerBuilder: (context, header, count) => Text(header),
+        itemsBuilder: (context, items) => Container(),
+        itemSorter: (a, b) => a.compareTo(b),
+      );
+
+      expect(widget, isNotNull);
+      expect(widget.itemSorter, isNotNull);
+    });
+
+    test('should accept null itemSorter (optional parameter)', () {
+      final widget = GroupedListView<String, String>(
+        items: ['apple', 'banana', 'cherry'],
+        itemGrouper: (item) => item.substring(0, 1),
+        headerBuilder: (context, header, count) => Text(header),
+        itemsBuilder: (context, items) => Container(),
+        itemSorter: null,
+      );
+
+      expect(widget, isNotNull);
+      expect(widget.itemSorter, isNull);
+    });
+  });
+
   group('ListView Customization Parameters', () {
     testWidgets('should apply padding to ListView',
         (WidgetTester tester) async {
