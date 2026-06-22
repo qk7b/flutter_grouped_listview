@@ -1,3 +1,13 @@
+## 3.0.0
+
+- Update dependencies
+- Add number of elements in section to the header builder (**breaking change**)
+- Add unit tests
+
+## 2.0.0
+
+- Add a the original index of the item in the parameters
+
 ## 1.0.0
 
 * `GroupedListView`
