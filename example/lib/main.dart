@@ -7,7 +7,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  const MyHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class MyHomePage extends StatelessWidget {
 }
 
 class CustomPage extends StatelessWidget {
-  const CustomPage({Key? key}) : super(key: key);
+  const CustomPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -69,14 +69,14 @@ class CustomPage extends StatelessWidget {
       appBar: AppBar(title: const Text('Custom GroupedListView')),
       body: GroupedListView(
         items: List<int>.generate(100, (index) => index + 1),
-        headerBuilder: (context, bool isEven) {
+        headerBuilder: (context, bool isEven, int evenItemsCount) {
           return Container(
             color: Colors.amber,
+            padding: const EdgeInsets.all(16),
             child: Text(
-              isEven ? 'Even' : 'Odd',
+              '${(isEven ? 'Even' : 'Odd')} ($evenItemsCount)',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            padding: const EdgeInsets.all(16),
           );
         },
         itemsBuilder: (context, List<IndexedItem<int>> items) {
@@ -92,9 +92,9 @@ class CustomPage extends StatelessWidget {
                     ((128 / items.length) * index).toInt() + 127,
                     ((128 / items.length) * index).toInt() + 127,
                   ),
+                  padding: const EdgeInsets.all(8),
                   child: Text(items[index].item.toRadixString(10),
                       textAlign: TextAlign.center),
-                  padding: const EdgeInsets.all(8),
                 );
               });
         },
@@ -106,7 +106,7 @@ class CustomPage extends StatelessWidget {
 }
 
 class ListPage extends StatelessWidget {
-  const ListPage({Key? key}) : super(key: key);
+  const ListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -114,14 +114,14 @@ class ListPage extends StatelessWidget {
       appBar: AppBar(title: const Text('GroupedListView.list()')),
       body: GroupedListView.list(
         items: List<int>.generate(100, (index) => index + 1),
-        headerBuilder: (context, bool isEven) {
+        headerBuilder: (context, bool isEven, int evenItemsCount) {
           return Container(
             color: Colors.amber,
+            padding: const EdgeInsets.all(16),
             child: Text(
-              isEven ? 'Even' : 'Odd',
+              '${(isEven ? 'Even' : 'Odd')} ($evenItemsCount)',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            padding: const EdgeInsets.all(16),
           );
         },
         listItemBuilder:
@@ -133,8 +133,8 @@ class ListPage extends StatelessWidget {
             ((128 / countInGroup) * itemIndexInGroup).toInt() + 127,
             ((128 / countInGroup) * itemIndexInGroup).toInt() + 127,
           ),
-          child: Text(item.toRadixString(10), textAlign: TextAlign.center),
           padding: const EdgeInsets.all(8),
+          child: Text(item.toRadixString(10), textAlign: TextAlign.center),
         ),
         itemGrouper: (int i) => i.isEven,
       ),
@@ -143,7 +143,7 @@ class ListPage extends StatelessWidget {
 }
 
 class GridPage extends StatelessWidget {
-  const GridPage({Key? key}) : super(key: key);
+  const GridPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -151,14 +151,14 @@ class GridPage extends StatelessWidget {
       appBar: AppBar(title: const Text('GroupedListView.grid()')),
       body: GroupedListView.grid(
         items: List<int>.generate(100, (index) => index + 1),
-        headerBuilder: (context, bool isEven) {
+        headerBuilder: (context, bool isEven, int evenItemsCount) {
           return Container(
             color: Colors.amber,
+            padding: const EdgeInsets.all(16),
             child: Text(
-              isEven ? 'Event' : 'Odd',
+              '${(isEven ? 'Even' : 'Odd')} ($evenItemsCount)',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            padding: const EdgeInsets.all(16),
           );
         },
         gridItemBuilder:
@@ -170,8 +170,8 @@ class GridPage extends StatelessWidget {
             ((128 / countInGroup) * itemIndexInGroup).toInt() + 127,
             ((128 / countInGroup) * itemIndexInGroup).toInt() + 127,
           ),
-          child: Text(item.toRadixString(10), textAlign: TextAlign.center),
           padding: const EdgeInsets.all(8),
+          child: Text(item.toRadixString(10), textAlign: TextAlign.center),
         ),
         itemGrouper: (int i) => i.isEven,
         crossAxisCount: 5,
@@ -181,7 +181,7 @@ class GridPage extends StatelessWidget {
 }
 
 class StickyPage extends StatelessWidget {
-  const StickyPage({Key? key}) : super(key: key);
+  const StickyPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -195,11 +195,11 @@ class StickyPage extends StatelessWidget {
           return StickyHeader(
               header: Container(
                 color: Colors.amber,
+                padding: const EdgeInsets.all(16),
                 child: Text(
                   isEvenHeader ? 'Even' : 'Odd',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                padding: const EdgeInsets.all(16),
               ),
               content: ListView.builder(
                   itemCount: items.length,
@@ -213,9 +213,9 @@ class StickyPage extends StatelessWidget {
                         ((128 / items.length) * index).toInt() + 127,
                         ((128 / items.length) * index).toInt() + 127,
                       ),
+                      padding: const EdgeInsets.all(8),
                       child: Text(items[index].item.toRadixString(10),
                           textAlign: TextAlign.center),
-                      padding: const EdgeInsets.all(8),
                     );
                   }));
         },
@@ -227,7 +227,7 @@ class StickyPage extends StatelessWidget {
 }
 
 class HorizontalPage extends StatelessWidget {
-  const HorizontalPage({Key? key}) : super(key: key);
+  const HorizontalPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -240,7 +240,8 @@ class HorizontalPage extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         items: List<int>.generate(100, (index) => index + 1),
         itemGrouper: (int i) => i.isEven,
-        headerBuilder: (context, bool isEven) => Text(isEven ? 'Even' : 'Odd'),
+        headerBuilder: (context, bool isEven, int evenItemsCount) =>
+            Text('${(isEven ? 'Even' : 'Odd')} ($evenItemsCount)'),
         listItemBuilder:
             (context, int countInGroup, int itemIndexInGroup, int item, _) =>
                 Container(
@@ -250,8 +251,8 @@ class HorizontalPage extends StatelessWidget {
             ((128 / countInGroup) * itemIndexInGroup).toInt() + 127,
             ((128 / countInGroup) * itemIndexInGroup).toInt() + 127,
           ),
-          child: Text(item.toRadixString(10), textAlign: TextAlign.center),
           padding: const EdgeInsets.all(8),
+          child: Text(item.toRadixString(10), textAlign: TextAlign.center),
         ),
       ),
     );

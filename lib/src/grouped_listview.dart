@@ -19,11 +19,14 @@ class IndexedItem<T> {
 }
 
 /// The [HeaderBuilder] is a function that render a header of type [H] as a
-/// [Widget], it takes a [BuildContext] and a [H] as parameters.
+/// [Widget], it takes a [BuildContext], a [header] [H] as parameters and also the 
+/// number of items in the group, represented by [itemsCountInHeader]
+/// 
 /// It is used by [GroupedListView<H, I>] to render the headers of type [H]
 typedef HeaderBuilder<H> = Widget Function(
   BuildContext context,
   H header,
+  int itemsCountInHeader
 );
 
 /// The [ItemsListBuilder] is a function that render a list of items of type [I]
@@ -155,7 +158,7 @@ class GroupedListView<H, I> extends StatelessWidget {
   /// the default [Column] used to display the [H] headers and [List] of [I] items.
   /// All of the fields are prefixed by `items` ([itemsMainAxisAlignment], [itemsMainAxisSize], ...)
   GroupedListView(
-      {Key? key,
+      {super.key,
       // GroupedListView params
       required this.items,
       this.headerBuilder,
@@ -186,8 +189,7 @@ class GroupedListView<H, I> extends StatelessWidget {
       this.itemsCrossAxisAlignment = CrossAxisAlignment.center,
       this.itemsTextDirection,
       this.itemsVerticalDirection = VerticalDirection.down,
-      this.itemsTextBaseline})
-      : super(key: key) {
+      this.itemsTextBaseline}) {
     if (customBuilder != null &&
         (headerBuilder != null || itemsBuilder != null)) {
       throw ArgumentError.value(customBuilder,
@@ -416,7 +418,7 @@ class GroupedListView<H, I> extends StatelessWidget {
                   verticalDirection: itemsVerticalDirection,
                   textBaseline: itemsTextBaseline,
                   children: [
-                    headerBuilder!(context, header),
+                    headerBuilder!(context, header, items.length),
                     itemsBuilder!(context, items)
                   ],
                 )
@@ -428,7 +430,7 @@ class GroupedListView<H, I> extends StatelessWidget {
                   verticalDirection: itemsVerticalDirection,
                   textBaseline: itemsTextBaseline,
                   children: [
-                      headerBuilder!(context, header),
+                      headerBuilder!(context, header, items.length),
                       itemsBuilder!(context, items)
                     ]);
         }
