@@ -39,7 +39,7 @@ Add the package as a dependency in your `pubspec.yaml` file.
 
 ```yaml
 dependencies:
-  simple_grouped_listview: "^1.0.0"
+  simple_grouped_listview: "^3.0.0"
 ```
 
 ### Import 
@@ -80,7 +80,7 @@ Here are examples of each usage
 GroupedListView.list(
     items: List<int>.generate(100, (index) => index + 1),
     itemGrouper: (int i) => i.isEven,
-    headerBuilder: (context, bool isEven) => Container(
+    headerBuilder: (context, bool isEven, int evenItemsCount) => Container(
         color: Colors.amber,
         child: Text(
             isEven ? 'Even' : 'Odd',
@@ -105,7 +105,7 @@ GroupedListView.list(
 GroupedListView.grid(
     items: List<int>.generate(100, (index) => index + 1),
     itemGrouper: (int i) => i.isEven,
-    headerBuilder: (context, bool isEven) => Container(
+    headerBuilder: (context, bool isEven, int evenItemsCount) => Container(
         color: Colors.amber,
         child: Text(
             isEven ? 'Even' : 'Odd',
@@ -131,7 +131,7 @@ GroupedListView.grid(
 ```dart
 GroupedListView(
     items: List<int>.generate(100, (index) => index + 1),
-    headerBuilder: (context, bool isEven) => Container(
+    headerBuilder: (context, bool isEven, int evenItemsCount) => Container(
         child: Text(
             isEven ? 'Even' : 'Odd',
             style: const TextStyle(fontWeight: FontWeight.bold),
